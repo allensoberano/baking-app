@@ -14,8 +14,69 @@ public class Recipe implements Parcelable {
     private List<Ingredient> ingredients;
     private List<Step> steps;
 
+    public Recipe(int id, String image, String name, String servings){
+        this.id = id;
+        this.image = image;
+        this.name = name;
+        this.servings = servings;
+    }
 
-    protected Recipe(Parcel in) {
+    public Recipe() {
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getServings() {
+        return servings;
+    }
+
+    public void setServings(String servings) {
+        this.servings = servings;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public List<Step> getSteps() {
+        return steps;
+    }
+
+    public void setSteps(List<Step> steps) {
+        this.steps = steps;
+    }
+
+
+
+
+    private Recipe(Parcel in) {
         id = in.readInt();
         image = in.readString();
         name = in.readString();

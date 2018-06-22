@@ -12,7 +12,12 @@ import android.view.ViewGroup;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.adapters.RecipeRVAdapter;
+import com.example.android.bakingapp.async.AsyncTaskCompleteListener;
+import com.example.android.bakingapp.async.RecipeQueryTask;
+import com.example.android.bakingapp.model.Recipe;
+import com.example.android.bakingapp.utils.NetworkUtils;
 
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,6 +26,7 @@ public class RecipeMainFragment extends Fragment {
     private RecyclerView mRecipeList;
     private RecipeRVAdapter adapter;
     private List<String> tempData;
+    private List<Recipe> mRecipeData;
 
     //Mandatory constructor for instantiating the fragment
     public RecipeMainFragment(){
@@ -43,8 +49,20 @@ public class RecipeMainFragment extends Fragment {
         RecipeRVAdapter mAdapter = new RecipeRVAdapter(tempData);
         mRecipeList.setAdapter(mAdapter);
 
+        URL recipeSearchUrl = NetworkUtils.buildRecipeURL();
+
+        new RecipeQueryTask(new RecipeQueryTaskCompleteListener()).execute(recipeSearchUrl);
+
         return rootView;
 
 
+    }
+
+    public class RecipeQueryTaskCompleteListener implements AsyncTaskCompleteListener<List<Recipe>> {
+
+        @Override
+        public void onTaskComplete(List<Recipe> result) {
+            mRecipeData = result;
+        }
     }
 }
