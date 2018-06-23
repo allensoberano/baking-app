@@ -14,10 +14,12 @@ public class Recipe implements Parcelable {
     private List<Ingredient> ingredients;
     private List<Step> steps;
 
-    public Recipe(int id, String image, String name, String servings){
+    public Recipe(int id, String image, String name, String servings, List<Ingredient> ingredients, List<Step> steps){
         this.id = id;
         this.image = image;
         this.name = name;
+        this.servings = servings;
+        this.ingredients = ingredients;
         this.servings = servings;
     }
 

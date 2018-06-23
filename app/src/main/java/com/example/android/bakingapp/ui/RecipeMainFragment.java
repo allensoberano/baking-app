@@ -46,8 +46,8 @@ public class RecipeMainFragment extends Fragment {
         int numberOfColumns = 6;
         //mRecipeList.setLayoutManager(new GridLayoutManager(this, tempData));
         mRecipeList.setLayoutManager(new LinearLayoutManager(getContext()));
-        RecipeRVAdapter mAdapter = new RecipeRVAdapter(tempData);
-        mRecipeList.setAdapter(mAdapter);
+        //RecipeRVAdapter mAdapter = new RecipeRVAdapter(tempData);
+        //mRecipeList.setAdapter(mAdapter);
 
         URL recipeSearchUrl = NetworkUtils.buildRecipeURL();
 
@@ -55,14 +55,23 @@ public class RecipeMainFragment extends Fragment {
 
         return rootView;
 
+    }
+
+    private void showRecipes(List<Recipe> recipe) {
+        RecipeRVAdapter recipeRVAdapter = new RecipeRVAdapter(recipe, getActivity());
+        mRecipeList.setAdapter(recipeRVAdapter);
 
     }
+
+
 
     public class RecipeQueryTaskCompleteListener implements AsyncTaskCompleteListener<List<Recipe>> {
 
         @Override
         public void onTaskComplete(List<Recipe> result) {
             mRecipeData = result;
+            showRecipes(mRecipeData);
         }
+
     }
 }
