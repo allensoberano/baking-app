@@ -7,7 +7,7 @@
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_recipes_main"
+        android:id="@+id/rv_recipe_details"
         android:layout_width="348dp"
         android:layout_height="match_parent"
         android:layout_marginBottom="16dp"

@@ -1,5 +1,6 @@
 package com.example.android.bakingapp.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,16 +22,36 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-public class RecipeMainFragment extends Fragment {
+public class RecipeMainFragment extends Fragment implements RecipeRVAdapter.ItemClickListener {
 
     private RecyclerView mRecipeList;
     private RecipeRVAdapter adapter;
     private List<String> tempData;
     private List<Recipe> mRecipeData;
+    OnRecipeClickListener mCallback;
 
     //Mandatory constructor for instantiating the fragment
     public RecipeMainFragment(){
 
+    }
+
+    public interface OnRecipeClickListener{
+        void onRecipeSelected(int position);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        //Makes sure that the host activity has implemented the callback interfae
+        //If not, it throws an exception
+
+        try {
+            mCallback = (OnRecipeClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+            + "must implement OnRecipeClickListener");
+        }
     }
 
     @Nullable
@@ -53,16 +74,36 @@ public class RecipeMainFragment extends Fragment {
 
         new RecipeQueryTask(new RecipeQueryTaskCompleteListener()).execute(recipeSearchUrl);
 
+        //***  STUCK HERE IMPLEMENTING CALLBACK
+        //Set a click listener on the recycleView and trigger the callback OnRecipeSelected
+        //mRecipeList.setOnItem
         return rootView;
 
     }
 
     private void showRecipes(List<Recipe> recipe) {
-        RecipeRVAdapter recipeRVAdapter = new RecipeRVAdapter(recipe, getActivity());
+        RecipeRVAdapter recipeRVAdapter = new RecipeRVAdapter(recipe, this);
         mRecipeList.setAdapter(recipeRVAdapter);
+        recipeRVAdapter.notifyDataSetChanged();
 
     }
 
+    @Override
+    public void onItemClick(int position) {
+        launchRecipeDetailFragment(position);
+    }
+
+    private void launchRecipeDetailFragment(int position) {
+
+//        Recipe recipeToSend;
+//
+//        recipeToSend = this.mRecipeData.get(position);
+//
+//        Intent intent = new Intent(this, RecipeDetailsFragment.class);
+//        intent.putExtra("recipe", recipeToSend);
+//        startActivity(intent);
+
+    }
 
 
     public class RecipeQueryTaskCompleteListener implements AsyncTaskCompleteListener<List<Recipe>> {

@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.model.Recipe;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -20,10 +22,9 @@ public class RecipeRVAdapter extends RecyclerView.Adapter<RecipeRVAdapter.ViewHo
     private Context context;
 
     // data is passed into the constructor
-    public RecipeRVAdapter(List<Recipe> data, Context context) {
+    public RecipeRVAdapter(List<Recipe> data, ItemClickListener listener) {
         this.mData = data;
-        //this.mClickListener = listener;
-        this.context = context;
+        this.mClickListener = listener;
     }
 
     // inflates the cell layout from xml when needed
@@ -37,7 +38,23 @@ public class RecipeRVAdapter extends RecyclerView.Adapter<RecipeRVAdapter.ViewHo
     // binds the data to the textview in each cell
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.myTextView.setText((CharSequence) mData.get(position));
+
+
+        String POSTER_PATH = "https://www.pexels.com/photo/food-plate-chocolate-dessert-132694";
+        //holder.myTextView.setText((CharSequence) mData.get(position).getName());
+        if (mData != null) {
+            Picasso.get()
+                    .load(POSTER_PATH)
+                    .fit()
+                    .placeholder(R.drawable.ic_cake_black_24dp)
+                    .error(R.drawable.ic_cake_black_24dp)
+                    .into(holder.desertImage);
+        }
+
+        holder.desertName.setText(mData.get(position).getName());
+        holder.desertServings.setText(mData.get(position).getServings());
+
+
     }
 
     // total number of cells
@@ -57,12 +74,18 @@ public class RecipeRVAdapter extends RecyclerView.Adapter<RecipeRVAdapter.ViewHo
 
     // stores and recycles views as they are scrolled off screen
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView myTextView;
+        ImageView desertImage;
+        TextView desertName;
+        TextView desertServings;
 
         ViewHolder(View itemView) {
             super(itemView);
 
-            myTextView = (TextView) itemView.findViewById(R.id.tv_recipe_title);
+
+            desertImage = itemView.findViewById(R.id.iv_recipe_image);
+            desertName = itemView.findViewById(R.id.tv_recipe_title);
+            desertServings = itemView.findViewById(R.id.tv_recipe_servings);
+
             itemView.setOnClickListener(this);
         }
 
@@ -70,6 +93,7 @@ public class RecipeRVAdapter extends RecyclerView.Adapter<RecipeRVAdapter.ViewHo
         public void onClick(View view) {
             //if (mClickListener != null)
             mClickListener.onItemClick(getAdapterPosition());
+
         }
     }
 
