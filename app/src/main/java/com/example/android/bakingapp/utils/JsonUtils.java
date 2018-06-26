@@ -13,11 +13,11 @@ import java.util.List;
 
 public class JsonUtils {
 
-    public static List<Recipe> parseRecipeJson(String json) throws JSONException {
+    public static ArrayList<Recipe> parseRecipeJson(String json) throws JSONException {
         JSONArray recipeResults = new JSONArray(json);//new JSONObject(json);
         //JSONArray recipeResults = recipeDetails.getJSONArray("ingredients");
 
-        List<Recipe> recipes = new ArrayList<>();
+        ArrayList<Recipe> recipes = new ArrayList<>();
 
         for (int i = 0; i < recipeResults.length(); i++){
             JSONObject recipeData = recipeResults.getJSONObject(i);

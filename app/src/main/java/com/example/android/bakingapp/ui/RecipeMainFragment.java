@@ -19,7 +19,7 @@ import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.utils.NetworkUtils;
 
 import java.net.URL;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeMainFragment extends Fragment implements RecipeRVAdapter.ItemClickListener {
@@ -27,7 +27,8 @@ public class RecipeMainFragment extends Fragment implements RecipeRVAdapter.Item
     private RecyclerView mRecipeList;
     private RecipeRVAdapter adapter;
     private List<String> tempData;
-    private List<Recipe> mRecipeData;
+    private ArrayList<Recipe> mRecipeData;
+    private Recipe recipe;
     OnRecipeClickListener mCallback;
 
     //Mandatory constructor for instantiating the fragment
@@ -35,8 +36,11 @@ public class RecipeMainFragment extends Fragment implements RecipeRVAdapter.Item
 
     }
 
+
     public interface OnRecipeClickListener{
-        void onRecipeSelected(int position);
+        //void onRecipeSelected(int position, List<Recipe> mRecipeData);
+
+        void onRecipeSelected(Recipe recipe);
     }
 
     @Override
@@ -58,25 +62,18 @@ public class RecipeMainFragment extends Fragment implements RecipeRVAdapter.Item
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+
+
         //Inflate the RecipeMainFragment layout
         View rootView = inflater.inflate(R.layout.fragment_recipes_main, container, false);
 
-        tempData = Arrays.asList("sup1", "sup2", "sup3");
-
         mRecipeList = rootView.findViewById(R.id.rv_recipes_main);
         int numberOfColumns = 6;
-        //mRecipeList.setLayoutManager(new GridLayoutManager(this, tempData));
         mRecipeList.setLayoutManager(new LinearLayoutManager(getContext()));
-        //RecipeRVAdapter mAdapter = new RecipeRVAdapter(tempData);
-        //mRecipeList.setAdapter(mAdapter);
 
         URL recipeSearchUrl = NetworkUtils.buildRecipeURL();
-
         new RecipeQueryTask(new RecipeQueryTaskCompleteListener()).execute(recipeSearchUrl);
 
-        //***  STUCK HERE IMPLEMENTING CALLBACK
-        //Set a click listener on the recycleView and trigger the callback OnRecipeSelected
-        //mRecipeList.setOnItem
         return rootView;
 
     }
@@ -90,10 +87,11 @@ public class RecipeMainFragment extends Fragment implements RecipeRVAdapter.Item
 
     @Override
     public void onItemClick(int position) {
-        launchRecipeDetailFragment(position);
+        mCallback.onRecipeSelected(mRecipeData.get(position));
     }
 
     private void launchRecipeDetailFragment(int position) {
+
 
 //        Recipe recipeToSend;
 //
@@ -106,10 +104,10 @@ public class RecipeMainFragment extends Fragment implements RecipeRVAdapter.Item
     }
 
 
-    public class RecipeQueryTaskCompleteListener implements AsyncTaskCompleteListener<List<Recipe>> {
+    public class RecipeQueryTaskCompleteListener implements AsyncTaskCompleteListener<ArrayList<Recipe>> {
 
         @Override
-        public void onTaskComplete(List<Recipe> result) {
+        public void onTaskComplete(ArrayList<Recipe> result) {
             mRecipeData = result;
             showRecipes(mRecipeData);
         }
