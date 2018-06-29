@@ -12,9 +12,10 @@ import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.model.Recipe;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeRVAdapter extends RecyclerView.Adapter<RecipeRVAdapter.ViewHolder> {
+public class RecipesRVAdapter extends RecyclerView.Adapter<RecipesRVAdapter.ViewHolder> {
 
     private List<Recipe> mData;
     private LayoutInflater mInflater;
@@ -22,7 +23,7 @@ public class RecipeRVAdapter extends RecyclerView.Adapter<RecipeRVAdapter.ViewHo
     private Context context;
 
     // data is passed into the constructor
-    public RecipeRVAdapter(List<Recipe> data, ItemClickListener listener) {
+    public RecipesRVAdapter(List<Recipe> data, ItemClickListener listener) {
         this.mData = data;
         this.mClickListener = listener;
     }
@@ -39,20 +40,22 @@ public class RecipeRVAdapter extends RecyclerView.Adapter<RecipeRVAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        ArrayList<String> imageURLS = new ArrayList<String>();
+        imageURLS.add("https://www.flickr.com/photos/wscwong/6824237903/");
 
-        String POSTER_PATH = "https://www.pexels.com/photo/food-plate-chocolate-dessert-132694";
-        //holder.myTextView.setText((CharSequence) mData.get(position).getName());
         if (mData != null) {
             Picasso.get()
-                    .load(POSTER_PATH)
+                    .load(imageURLS.get(0))
                     .fit()
                     .placeholder(R.drawable.ic_cake_black_24dp)
                     .error(R.drawable.ic_cake_black_24dp)
                     .into(holder.desertImage);
+
+            holder.desertName.setText(mData.get(position).getName());
+            holder.desertServings.setText(mData.get(position).getServings());
         }
 
-        holder.desertName.setText(mData.get(position).getName());
-        holder.desertServings.setText(mData.get(position).getServings());
+
 
 
     }

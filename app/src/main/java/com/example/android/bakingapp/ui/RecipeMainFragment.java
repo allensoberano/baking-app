@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.adapters.RecipeRVAdapter;
+import com.example.android.bakingapp.adapters.RecipesRVAdapter;
 import com.example.android.bakingapp.async.AsyncTaskCompleteListener;
 import com.example.android.bakingapp.async.RecipeQueryTask;
 import com.example.android.bakingapp.model.Recipe;
@@ -22,10 +22,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeMainFragment extends Fragment implements RecipeRVAdapter.ItemClickListener {
+public class RecipeMainFragment extends Fragment implements RecipesRVAdapter.ItemClickListener {
 
     private RecyclerView mRecipeList;
-    private RecipeRVAdapter adapter;
+    private RecipesRVAdapter adapter;
     private List<String> tempData;
     private ArrayList<Recipe> mRecipeData;
     private Recipe recipe;
@@ -38,7 +38,6 @@ public class RecipeMainFragment extends Fragment implements RecipeRVAdapter.Item
 
 
     public interface OnRecipeClickListener{
-        //void onRecipeSelected(int position, List<Recipe> mRecipeData);
 
         void onRecipeSelected(Recipe recipe);
     }
@@ -79,7 +78,7 @@ public class RecipeMainFragment extends Fragment implements RecipeRVAdapter.Item
     }
 
     private void showRecipes(List<Recipe> recipe) {
-        RecipeRVAdapter recipeRVAdapter = new RecipeRVAdapter(recipe, this);
+        RecipesRVAdapter recipeRVAdapter = new RecipesRVAdapter(recipe, this);
         mRecipeList.setAdapter(recipeRVAdapter);
         recipeRVAdapter.notifyDataSetChanged();
 

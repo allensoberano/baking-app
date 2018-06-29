@@ -20,10 +20,8 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        URL recipeSearchUrl = NetworkUtils.buildRecipeURL();
-//        new RecipeQueryTask(new RecipesQueryTaskCompleteListener()).execute(recipeSearchUrl);
-
-
+//        getSupportFragmentManager().addOnBackStackChangedListener(this);
+//        shouldDisplayHomeUp();
 
         RecipeMainFragment recipeMainFragment = new RecipeMainFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -32,20 +30,6 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
                 .commit();
     }
 
-//    @Override
-//    public void onRecipeSelected(int position, List<Recipe> mRecipeData) {
-//
-//        Toast.makeText(this, "Position clicked = " + position, Toast.LENGTH_SHORT).show();
-//        final Intent intent = new Intent(this, RecipeDetailsFragment.class);
-//        intent.putExtra("recipePosition", position);
-//
-//
-//        RecipeDetailsFragment recipeDetailsFragment = new RecipeDetailsFragment();
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.recipe_main_container, recipeDetailsFragment)
-//                .commit();
-//    }
 
     @Override
     public void onRecipeSelected(Recipe recipe) {
@@ -63,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
                 .commit();
 
     }
+
 
     public class RecipesQueryTaskCompleteListener implements AsyncTaskCompleteListener<ArrayList<Recipe>> {
 
