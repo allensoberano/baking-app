@@ -6,12 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.android.bakingapp.async.AsyncTaskCompleteListener;
 import com.example.android.bakingapp.model.Recipe;
+import com.example.android.bakingapp.model.Step;
 import com.example.android.bakingapp.ui.RecipeDetailsFragment;
 import com.example.android.bakingapp.ui.RecipeMainFragment;
+import com.example.android.bakingapp.ui.StepDetailsFragment;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements RecipeMainFragment.OnRecipeClickListener {
+public class MainActivity extends AppCompatActivity implements RecipeMainFragment.OnRecipeClickListener, RecipeDetailsFragment.OnStepClickListener {
 
     private ArrayList<Recipe> mRecipeData;
 
@@ -44,6 +46,19 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.recipe_main_container, recipeDetailsFragment)
+                .commit();
+
+    }
+
+    @Override
+    public void onStepSelected(ArrayList<Step> steps) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("steps", steps);
+        StepDetailsFragment stepDetailsFragment = new StepDetailsFragment();
+        stepDetailsFragment.setArguments(bundle);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.recipe_main_container, stepDetailsFragment)
                 .commit();
 
     }

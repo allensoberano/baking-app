@@ -54,7 +54,7 @@ public class JsonUtils {
         }
 
         try {
-            List<Step> recipeSteps = getRecipeSteps(recipeData.getJSONArray(RECIPE_STEPS));
+            ArrayList<Step> recipeSteps = getRecipeSteps(recipeData.getJSONArray(RECIPE_STEPS));
             recipe.setSteps(recipeSteps);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -95,9 +95,9 @@ public class JsonUtils {
 
     }
 
-    private static List<Step> getRecipeSteps(JSONArray recipeSteps) {
+    private static ArrayList<Step> getRecipeSteps(JSONArray recipeSteps) {
 
-        List<Step> steps = new ArrayList<>();
+        ArrayList<Step> steps = new ArrayList<>();
         for (int i = 0; i < recipeSteps.length(); i++){
             try {
                 JSONObject stepData = recipeSteps.getJSONObject(i);

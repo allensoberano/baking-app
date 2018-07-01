@@ -1,5 +1,6 @@
 package com.example.android.bakingapp.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,18 +16,41 @@ import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.adapters.RecipeDetailRVAdapter;
 import com.example.android.bakingapp.model.Ingredient;
 import com.example.android.bakingapp.model.Recipe;
+import com.example.android.bakingapp.model.Step;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAdapter.ItemClickListener {
 
    private Recipe mRecipeSent;
    private RecyclerView mRecipeList;
+   OnStepClickListener mCallback;
 
    //Mandatory constructor for instantiating the fragment
    public RecipeDetailsFragment(){
 
    }
+
+    public interface OnStepClickListener{
+
+        void onStepSelected(ArrayList<Step> steps);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        //Makes sure that the host activity has implemented the callback interfae
+        //If not, it throws an exception
+
+        try {
+            mCallback = (OnStepClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + "must implement OnStepClickListener");
+        }
+    }
 
     @Nullable
    @Override
@@ -61,6 +85,7 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
 
    @Override
    public void onItemClick(int position) {
+       mCallback.onStepSelected(mRecipeSent.getSteps());
 
    }
 
