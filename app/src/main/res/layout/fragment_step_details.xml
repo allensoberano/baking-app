@@ -6,10 +6,20 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_video_here"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="step details"
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="229dp" />
+        android:text=""/>
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="44dp" />
+
+
+
+
 </android.support.constraint.ConstraintLayout>

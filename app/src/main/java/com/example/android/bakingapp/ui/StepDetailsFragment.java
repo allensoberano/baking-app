@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.model.Step;
 
 import java.util.ArrayList;
@@ -21,8 +23,16 @@ public class StepDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        //description, id, shortDescription, thumbNailURL, videoURL
+
         mStepsSent = getArguments().getParcelableArrayList("steps");
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View rootView = inflater.inflate(R.layout.fragment_step_details, container, false);
+
+        TextView mDescription = rootView.findViewById(R.id.tv_description);
+        mDescription.setText(mStepsSent.get(0).getDescription());
+
+
+        return rootView;
     }
 }
