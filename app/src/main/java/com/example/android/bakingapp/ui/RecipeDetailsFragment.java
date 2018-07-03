@@ -34,7 +34,7 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
 
     public interface OnStepClickListener{
 
-        void onStepSelected(ArrayList<Step> steps);
+        void onStepSelected(ArrayList<Step> steps, int position);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
 
    @Override
    public void onItemClick(int position) {
-       mCallback.onStepSelected(mRecipeSent.getSteps());
+       mCallback.onStepSelected(mRecipeSent.getSteps(), position);
 
    }
 
