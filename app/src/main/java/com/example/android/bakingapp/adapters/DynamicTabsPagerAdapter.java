@@ -14,10 +14,11 @@ import com.example.android.bakingapp.ui.StepDetailsFragment;
 
 public class DynamicTabsPagerAdapter extends FragmentStatePagerAdapter{
 
-    private final Bundle fragmentBundle;
-    private int mSize;
 
-    public DynamicTabsPagerAdapter(FragmentManager fm, Bundle bundle, int size) {
+    private int mSize;
+    private Bundle fragmentBundle;
+
+    public DynamicTabsPagerAdapter(FragmentManager fm, int size, Bundle bundle) {
         super(fm);
         fragmentBundle = bundle;
         mSize = size;
@@ -27,20 +28,9 @@ public class DynamicTabsPagerAdapter extends FragmentStatePagerAdapter{
     @Override
     public Fragment getItem(int position) {
 
-
-        return dynamicFragment();
-//        switch (position){
-//
-//            default:
-//                return dynamicFragment();
-//        }
-
-        //return new StepDetailsFragment();
-    }
-
-    private StepDetailsFragment dynamicFragment(){
         final StepDetailsFragment f = new StepDetailsFragment();
-        f.setArguments(this.fragmentBundle);
+        fragmentBundle.putInt("position", position-1);
+        f.setArguments(fragmentBundle);
         return f;
 
     }
@@ -55,6 +45,11 @@ public class DynamicTabsPagerAdapter extends FragmentStatePagerAdapter{
     @Override
     public CharSequence getPageTitle(int position) {
         //returns position to be used in tabs title: Step 1, Step 2, etc...
-        return "Step " + (position+1);
+        switch (position) {
+            case 0:
+                return "INTRO";
+            default:
+                return "Step " + (position);
+        }
     }
 }

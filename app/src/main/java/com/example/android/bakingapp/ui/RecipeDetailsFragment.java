@@ -41,7 +41,7 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        //Makes sure that the host activity has implemented the callback interfae
+        //Makes sure that the host activity has implemented the callback interface
         //If not, it throws an exception
 
         try {

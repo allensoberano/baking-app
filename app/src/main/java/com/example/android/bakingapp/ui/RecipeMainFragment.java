@@ -62,7 +62,6 @@ public class RecipeMainFragment extends Fragment implements RecipesRVAdapter.Ite
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-
         //Inflate the RecipeMainFragment layout
         View rootView = inflater.inflate(R.layout.fragment_recipes_main, container, false);
 
@@ -89,18 +88,7 @@ public class RecipeMainFragment extends Fragment implements RecipesRVAdapter.Ite
         mCallback.onRecipeSelected(mRecipeData.get(position));
     }
 
-    private void launchRecipeDetailFragment(int position) {
 
-
-//        Recipe recipeToSend;
-//
-//        recipeToSend = this.mRecipeData.get(position);
-//
-//        Intent intent = new Intent(this, RecipeDetailsFragment.class);
-//        intent.putExtra("recipe", recipeToSend);
-//        startActivity(intent);
-
-    }
 
 
     public class RecipeQueryTaskCompleteListener implements AsyncTaskCompleteListener<ArrayList<Recipe>> {
