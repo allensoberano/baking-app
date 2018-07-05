@@ -23,6 +23,19 @@ public class StepDetailsFragment extends Fragment {
     private ViewPager mPager;
 
 
+    public StepDetailsFragment(){
+
+    }
+
+    public static StepDetailsFragment newInstance(Bundle bundle, int position){
+
+            final StepDetailsFragment f = new StepDetailsFragment();
+            bundle.putInt("position", position);
+            f.setArguments(bundle);
+            return f;
+
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

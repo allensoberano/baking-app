@@ -41,7 +41,7 @@ public class RecipesRVAdapter extends RecyclerView.Adapter<RecipesRVAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         ArrayList<String> imageURLS = new ArrayList<String>();
-        imageURLS.add("https://www.flickr.com/photos/wscwong/6824237903/");
+        imageURLS.add("https://c1.staticflickr.com/1/69/194933662_006fe7fae8.jpg");
 
         if (mData != null) {
             Picasso.get()
