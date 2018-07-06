@@ -19,6 +19,7 @@ public class StepDetailsTabsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_step_details_tabs, container, false);
         Bundle bundle = getArguments();
         int mStepsSent = getArguments().getParcelableArrayList("steps").size();
+        int mStepSelected = getArguments().getInt("stepSelected");
 
         // region ViewPager
         ViewPager viewPager = rootView.findViewById(R.id.vp_steps);
@@ -27,6 +28,7 @@ public class StepDetailsTabsFragment extends Fragment {
         TabLayout tabLayout = rootView.findViewById(R.id.tl_sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        viewPager.setCurrentItem(mStepSelected);
         return rootView;
         //endregion
     }
