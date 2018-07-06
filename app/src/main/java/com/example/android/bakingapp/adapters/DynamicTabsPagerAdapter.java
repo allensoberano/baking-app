@@ -29,19 +29,7 @@ public class DynamicTabsPagerAdapter extends FragmentStatePagerAdapter{
     public Fragment getItem(int position) {
 
         return StepDetailsFragment.newInstance(fragmentBundle, position);
-
-
     }
-//    @Override
-//    public Fragment getItem(int position) {
-//
-//        final StepDetailsFragment f = new StepDetailsFragment();
-//        fragmentBundle.putInt("position", position);
-//        f.setArguments(fragmentBundle);
-//        return f;
-//
-//    }
-
 
     @Override
     public int getCount() {
