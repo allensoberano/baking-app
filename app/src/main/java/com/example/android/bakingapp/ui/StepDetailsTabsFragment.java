@@ -23,7 +23,7 @@ public class StepDetailsTabsFragment extends Fragment {
 
         // region ViewPager
         ViewPager viewPager = rootView.findViewById(R.id.vp_steps);
-        viewPager.setAdapter(new DynamicTabsPagerAdapter(getFragmentManager(), mStepsSent, bundle));
+        viewPager.setAdapter(new DynamicTabsPagerAdapter(getChildFragmentManager(), mStepsSent, bundle));
 
         TabLayout tabLayout = rootView.findViewById(R.id.tl_sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -32,4 +32,5 @@ public class StepDetailsTabsFragment extends Fragment {
         return rootView;
         //endregion
     }
+
 }

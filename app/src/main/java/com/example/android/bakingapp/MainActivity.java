@@ -13,7 +13,7 @@ import com.example.android.bakingapp.ui.StepDetailsTabsFragment;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements RecipeMainFragment.OnRecipeClickListener, RecipeDetailsFragment.OnStepClickListener {
+public class MainActivity extends AppCompatActivity implements RecipeMainFragment.OnRecipeClickListener, RecipeDetailsFragment.OnStepClickListener, FragmentManager.OnBackStackChangedListener {
 
     private ArrayList<Recipe> mRecipeData;
 
@@ -21,9 +21,12 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        shouldDisplayHomeUp();
+
 
         RecipeMainFragment recipeMainFragment = new RecipeMainFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.addOnBackStackChangedListener(this);
         fragmentManager.beginTransaction()
                 .add(R.id.recipe_main_container, recipeMainFragment)
                 .commit();
@@ -39,7 +42,9 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
         RecipeDetailsFragment recipeDetailsFragment = new RecipeDetailsFragment();
         recipeDetailsFragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.addOnBackStackChangedListener(this);
         fragmentManager.beginTransaction()
+                .addToBackStack(null)
                 .replace(R.id.recipe_main_container, recipeDetailsFragment)
                 .commit();
 
@@ -55,12 +60,40 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
         StepDetailsTabsFragment stepDetailsTabsFragment = new StepDetailsTabsFragment();
         stepDetailsTabsFragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.addOnBackStackChangedListener(this);
         fragmentManager.beginTransaction()
+                .addToBackStack(null)
                 .replace(R.id.recipe_main_container, stepDetailsTabsFragment)
                 .commit();
 
 
     }
+
+    //Backstack Fragment Navigation:
+    //Reference: https://stackoverflow.com/questions/13086840/actionbar-up-navigation-with-fragments
+
+    @Override
+    public void onBackStackChanged() {
+        shouldDisplayHomeUp();
+    }
+
+    public void shouldDisplayHomeUp(){
+        //Enable Up button only  if there are entries in the back stack
+        boolean canback = getSupportFragmentManager().getBackStackEntryCount()>0;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        //This method is called when the up button is pressed. Just the pop back stack.
+        getSupportFragmentManager().popBackStack();
+        return true;
+    }
+
+//    public void setActionBarTitle(String title) {
+//        getSupportActionBar().setTitle(title);
+//    }
+
 
 
     public class RecipesQueryTaskCompleteListener implements AsyncTaskCompleteListener<ArrayList<Recipe>> {

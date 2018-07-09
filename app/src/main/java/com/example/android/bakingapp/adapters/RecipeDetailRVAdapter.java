@@ -8,12 +8,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.model.Ingredient;
 import com.example.android.bakingapp.model.Recipe;
+
+import java.util.List;
 
 public class RecipeDetailRVAdapter extends RecyclerView.Adapter<RecipeDetailRVAdapter.ViewHolder> {
 
     private Recipe mRecipe;
     private ItemClickListener mClickListener;
+    private List<Ingredient> mIngredients;
 
     // data is passed into the constructor
     public RecipeDetailRVAdapter(Recipe data, ItemClickListener listener) {
@@ -32,6 +36,7 @@ public class RecipeDetailRVAdapter extends RecyclerView.Adapter<RecipeDetailRVAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
 
         holder.stepDescription.setText(mRecipe.getSteps().get(position).getShortDescription());
 
@@ -52,7 +57,7 @@ public class RecipeDetailRVAdapter extends RecyclerView.Adapter<RecipeDetailRVAd
     public int getItemCount() {
 
         if (mRecipe.getSteps() != null) {
-            return mRecipe.getSteps().size();
+            return mRecipe.getSteps().size(); //+1 for ingredients list
         } else {
             return 0;
         }
@@ -86,4 +91,21 @@ public class RecipeDetailRVAdapter extends RecyclerView.Adapter<RecipeDetailRVAd
 
         }
     }
+
+    private String buildString(List<Ingredient> ingredients){
+
+        //Builds a string of integredients with line breaks
+        StringBuilder builder = new StringBuilder();
+        for (Ingredient ingredient : ingredients) {
+            builder.append(ingredient.getQuantity() + " "+ ingredient.getMeasure() + " " + ingredient.getIngredient() + "\n");
+        }
+
+        return builder.toString();
+    }
+
+//    private void setTitleActionBar() {
+//        ((MainActivity) getActivity())
+//                .setActionBarTitle(mRecipeSent.getName());
+//    }
+
 }

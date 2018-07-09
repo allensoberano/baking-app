@@ -62,12 +62,15 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
       //Inflate the RecipeMainFragment layout
       View rootView = inflater.inflate(R.layout.fragment_recipe_details, container, false);
 
+        //setTitleActionBar();
+
       mRecipeList = rootView.findViewById(R.id.rv_recipe_details);
       mRecipeList.setLayoutManager(new LinearLayoutManager(getContext()));
       RecipeDetailRVAdapter recipeDetailRVAdapter= new RecipeDetailRVAdapter(mRecipeSent, this);
       mRecipeList.setAdapter(recipeDetailRVAdapter);
       recipeDetailRVAdapter.notifyDataSetChanged();
       //showRecipe(mRecipeSent);
+
 
 
         TextView ingredients = rootView.findViewById(R.id.tv_ingredient_list);
@@ -93,10 +96,16 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
 
        //Builds a string of integredients with line breaks
        StringBuilder builder = new StringBuilder();
+       builder.append("INGREDIENTS:\n");
        for (Ingredient ingredient : ingredients) {
            builder.append(ingredient.getQuantity() + " "+ ingredient.getMeasure() + " " + ingredient.getIngredient() + "\n");
        }
 
        return builder.toString();
-   }
+       }
+
+//    private void setTitleActionBar() {
+//        ((MainActivity) getActivity())
+//                .setActionBarTitle(mRecipeSent.getName());
+//    }
 }

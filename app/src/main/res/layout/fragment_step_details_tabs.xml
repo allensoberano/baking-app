@@ -5,16 +5,18 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tl_sliding_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabMode="scrollable"/>
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_steps"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tl_sliding_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabMode="scrollable"/>
 
         </android.support.v4.view.ViewPager>
 
