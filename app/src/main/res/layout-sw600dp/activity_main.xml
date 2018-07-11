@@ -14,13 +14,6 @@
     </FrameLayout>
 
 
-    <LinearLayout
-        android:id="@+id/ll_step_details"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    </LinearLayout>
-
     <!-- a small divider -->
     <View
         android:layout_width="1dp"
@@ -34,7 +27,7 @@
             android:id="@+id/ll_step_details_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
         </LinearLayout>
 

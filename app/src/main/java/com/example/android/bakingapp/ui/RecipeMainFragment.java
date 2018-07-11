@@ -67,7 +67,6 @@ public class RecipeMainFragment extends Fragment implements RecipesRVAdapter.Ite
         View rootView = inflater.inflate(R.layout.fragment_recipes_main, container, false);
 
         mRecipeList = rootView.findViewById(R.id.rv_recipes_main);
-        int numberOfColumns = 6;
         //mRecipeList.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecipeList.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns()));
 

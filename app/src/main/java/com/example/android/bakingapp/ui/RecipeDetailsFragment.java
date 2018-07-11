@@ -101,7 +101,6 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
    private String buildString(List<Ingredient> ingredients){
 
        StringBuilder builder = new StringBuilder();
-       builder.append("INGREDIENTS:\n");
        for (Ingredient ingredient : ingredients) {
            builder.append(ingredient.getQuantity() + " "+ ingredient.getMeasure() + " " + ingredient.getIngredient() + "\n");
        }

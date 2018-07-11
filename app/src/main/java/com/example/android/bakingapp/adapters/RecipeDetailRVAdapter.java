@@ -103,9 +103,6 @@ public class RecipeDetailRVAdapter extends RecyclerView.Adapter<RecipeDetailRVAd
         return builder.toString();
     }
 
-//    private void setTitleActionBar() {
-//        ((MainActivity) getActivity())
-//                .setActionBarTitle(mRecipeSent.getName());
-//    }
+
 
 }

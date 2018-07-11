@@ -3,7 +3,8 @@ package com.example.android.bakingapp;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.example.android.bakingapp.async.AsyncTaskCompleteListener;
 import com.example.android.bakingapp.model.Recipe;
@@ -18,12 +19,26 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
 
     private ArrayList<Recipe> mRecipeData;
     private boolean mTwoPane;
+    private String actionBarTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         shouldDisplayHomeUp();
+
+        if(findViewById(R.id.ll_step_details_main) != null){
+            mTwoPane = true;
+
+            FrameLayout layout = findViewById(R.id.recipe_main_container);
+            ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            layout.setLayoutParams(layoutParams);
+
+        } else {
+            mTwoPane = false;
+
+        }
 
         RecipeMainFragment recipeMainFragment = new RecipeMainFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -32,16 +47,11 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
                 .add(R.id.recipe_main_container, recipeMainFragment)
                 .commit();
 
+    }
 
-        if(findViewById(R.id.ll_step_details_main) != null){
-            mTwoPane = true;
-        } else {
-            mTwoPane = false;
-        }
-
-
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -69,12 +79,22 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
                     .commit();
         } else {
 
-            findViewById(R.id.recipe_main_container).setVisibility(View.GONE);
+            FrameLayout layout = findViewById(R.id.recipe_main_container);
+            ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+            layoutParams.width = 800;
+            layout.setLayoutParams(layoutParams);
+
+            //findViewById(R.id.recipe_main_container).setVisibility(View.GONE);
             fragmentManager.beginTransaction()
-                    .add(R.id.ll_step_details, recipeDetailsFragment)
+                    .addToBackStack(null)
+                    .replace(R.id.recipe_main_container, recipeDetailsFragment)
                     .commit();
 
+            onStepSelected(recipe.getSteps(), 0);
+
         }
+        actionBarTitle = recipe.getName();
+        setActionBarTitle(actionBarTitle);
 
     }
 
@@ -89,10 +109,27 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
         stepDetailsTabsFragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(this);
-        fragmentManager.beginTransaction()
-                .addToBackStack(null)
-                .replace(R.id.recipe_main_container, stepDetailsTabsFragment)
-                .commit();
+
+
+        if (!mTwoPane) {
+            fragmentManager.beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.recipe_main_container, stepDetailsTabsFragment)
+                    .commit();
+        } else {
+
+//            FrameLayout layout = findViewById(R.id.ll_step_details_main);
+//            ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+//            layoutParams.width = 800;
+//            layout.setLayoutParams(layoutParams);
+
+            //findViewById(R.id.recipe_main_container).setVisibility(View.GONE);
+            fragmentManager.beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.ll_step_details_main, stepDetailsTabsFragment)
+                    .commit();
+
+        }
 
 
     }
@@ -109,18 +146,35 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
         //Enable Up button only  if there are entries in the back stack
         boolean canback = getSupportFragmentManager().getBackStackEntryCount()>0;
         getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
+
+        if (!canback) adjustMainActivityLayout();
+    }
+
+    private void adjustMainActivityLayout(){
+
+            FrameLayout layout = findViewById(R.id.recipe_main_container);
+            ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            layout.setLayoutParams(layoutParams);
+
+            setActionBarTitle("Baking App");
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         //This method is called when the up button is pressed. Just the pop back stack.
-        getSupportFragmentManager().popBackStack();
+        if (mTwoPane) {
+            FragmentManager fm = getSupportFragmentManager();
+            fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
         return true;
     }
 
-//    public void setActionBarTitle(String title) {
-//        getSupportActionBar().setTitle(title);
-//    }
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
 
 
 
@@ -129,7 +183,6 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
         @Override
         public void onTaskComplete(ArrayList<Recipe> result) {
             mRecipeData = result;
-            //showMovies(mMovieData);
         }
     }
 
