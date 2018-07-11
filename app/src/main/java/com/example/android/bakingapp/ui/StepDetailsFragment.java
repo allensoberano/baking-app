@@ -1,5 +1,6 @@
 package com.example.android.bakingapp.ui;
 
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -83,11 +84,32 @@ public class StepDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_step_details, container, false);
         setDescription(view);
         videoOrThumbnail(view);
+
+
         //description, id, shortDescription, thumbNailURL, videoURL
 
 
 
         return view;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        //check the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            //RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams playerView.getLayoutParams();
+
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+//            outState.putLong(POSITION_KEY, mCurrentPosition);
+//            outState.putBoolean(PLAY_WHEN_READY_KEY, mPlayWhenReady);
     }
 
     private void setDescription(View view){

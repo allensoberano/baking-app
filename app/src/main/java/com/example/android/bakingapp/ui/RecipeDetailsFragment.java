@@ -2,6 +2,7 @@ package com.example.android.bakingapp.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,10 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
    private Recipe mRecipeSent;
    private RecyclerView mRecipeList;
    OnStepClickListener mCallback;
+
+   //Instant States
+   private Parcelable rvState;
+   private final static String LIST_STATE_KEY = "rv_state";
 
    //Mandatory constructor for instantiating the fragment
    public RecipeDetailsFragment(){
@@ -92,9 +97,9 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
 
    }
 
+    //Builds a string of ingredients with line breaks
    private String buildString(List<Ingredient> ingredients){
 
-       //Builds a string of integredients with line breaks
        StringBuilder builder = new StringBuilder();
        builder.append("INGREDIENTS:\n");
        for (Ingredient ingredient : ingredients) {
@@ -108,4 +113,22 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
 //        ((MainActivity) getActivity())
 //                .setActionBarTitle(mRecipeSent.getName());
 //    }
+
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        rvState = mRecipeList.getLayoutManager().onSaveInstanceState();
+        outState.putParcelable(LIST_STATE_KEY, rvState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            // Restore last state for checked position.
+           // mRecipeList = savedInstanceState.getParcelable(LIST_STATE_KEY);
+            mRecipeList.getLayoutManager().onRestoreInstanceState(rvState);
+        }
+    }
 }

@@ -5,24 +5,26 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="6dp"
-    app:cardElevation="6dp">
+    app:cardElevation="6dp"
+    app:cardUseCompatPadding="true">
 
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
-    android:layout_marginTop="4dp">
+    android:layout_margin="4dp"
+    >
 
     <ImageView
         android:id="@+id/iv_recipe_image"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_weight="1"
-        android:scaleType="fitCenter"
+        android:scaleType="fitXY"
         android:layout_gravity="center_horizontal"
-        android:padding="5dp"
+        android:padding="10dp"
         android:contentDescription="Desert"
+
         />
 
     <TextView

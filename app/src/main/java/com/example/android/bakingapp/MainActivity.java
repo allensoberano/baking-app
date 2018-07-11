@@ -3,6 +3,7 @@ package com.example.android.bakingapp;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.example.android.bakingapp.async.AsyncTaskCompleteListener;
 import com.example.android.bakingapp.model.Recipe;
@@ -16,13 +17,13 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements RecipeMainFragment.OnRecipeClickListener, RecipeDetailsFragment.OnStepClickListener, FragmentManager.OnBackStackChangedListener {
 
     private ArrayList<Recipe> mRecipeData;
+    private boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         shouldDisplayHomeUp();
-
 
         RecipeMainFragment recipeMainFragment = new RecipeMainFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -31,8 +32,25 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
                 .add(R.id.recipe_main_container, recipeMainFragment)
                 .commit();
 
+
+        if(findViewById(R.id.ll_step_details_main) != null){
+            mTwoPane = true;
+        } else {
+            mTwoPane = false;
+        }
+
+
+
+
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's instance
+        //getSupportFragmentManager().putFragment(outState, "recipeDetailsFragment", mContent);
+    }
 
     @Override
     public void onRecipeSelected(Recipe recipe) {
@@ -43,10 +61,20 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
         recipeDetailsFragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(this);
-        fragmentManager.beginTransaction()
-                .addToBackStack(null)
-                .replace(R.id.recipe_main_container, recipeDetailsFragment)
-                .commit();
+
+        if (!mTwoPane) {
+            fragmentManager.beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.recipe_main_container, recipeDetailsFragment)
+                    .commit();
+        } else {
+
+            findViewById(R.id.recipe_main_container).setVisibility(View.GONE);
+            fragmentManager.beginTransaction()
+                    .add(R.id.ll_step_details, recipeDetailsFragment)
+                    .commit();
+
+        }
 
     }
 
