@@ -7,12 +7,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
         <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/video_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:visibility="gone"
+            >
 
         </com.google.android.exoplayer2.ui.PlayerView>
 
@@ -32,7 +42,8 @@
         android:text="Description"
         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
-
+        </LinearLayout>
+    </ScrollView>
 
 
 

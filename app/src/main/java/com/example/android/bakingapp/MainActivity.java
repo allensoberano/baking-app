@@ -27,25 +27,28 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
         setContentView(R.layout.activity_main);
         shouldDisplayHomeUp();
 
-        if(findViewById(R.id.ll_step_details_main) != null){
-            mTwoPane = true;
+        if (savedInstanceState == null) {
 
-            FrameLayout layout = findViewById(R.id.recipe_main_container);
-            ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
-            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            layout.setLayoutParams(layoutParams);
+            if (findViewById(R.id.ll_step_details_main) != null) {
+                mTwoPane = true;
 
-        } else {
-            mTwoPane = false;
+                FrameLayout layout = findViewById(R.id.recipe_main_container);
+                ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+                layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                layout.setLayoutParams(layoutParams);
 
+            } else {
+                mTwoPane = false;
+
+            }
+
+            RecipeMainFragment recipeMainFragment = new RecipeMainFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.addOnBackStackChangedListener(this);
+            fragmentManager.beginTransaction()
+                    .add(R.id.recipe_main_container, recipeMainFragment)
+                    .commit();
         }
-
-        RecipeMainFragment recipeMainFragment = new RecipeMainFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.addOnBackStackChangedListener(this);
-        fragmentManager.beginTransaction()
-                .add(R.id.recipe_main_container, recipeMainFragment)
-                .commit();
 
     }
 
@@ -59,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
         super.onSaveInstanceState(outState);
 
         //Save the fragment's instance
-        //getSupportFragmentManager().putFragment(outState, "recipeDetailsFragment", mContent);
+       // getSupportFragmentManager().putFragment(outState, "recipeDetailsFragment", ???);
     }
 
     @Override
@@ -93,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
             onStepSelected(recipe.getSteps(), 0);
 
         }
+
         actionBarTitle = recipe.getName();
         setActionBarTitle(actionBarTitle);
 

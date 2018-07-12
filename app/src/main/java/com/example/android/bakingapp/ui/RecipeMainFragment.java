@@ -89,9 +89,6 @@ public class RecipeMainFragment extends Fragment implements RecipesRVAdapter.Ite
         mCallback.onRecipeSelected(mRecipeData.get(position));
     }
 
-
-
-
     public class RecipeQueryTaskCompleteListener implements AsyncTaskCompleteListener<ArrayList<Recipe>> {
 
         @Override

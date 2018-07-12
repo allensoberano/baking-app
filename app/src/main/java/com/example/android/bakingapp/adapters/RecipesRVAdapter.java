@@ -54,10 +54,6 @@ public class RecipesRVAdapter extends RecyclerView.Adapter<RecipesRVAdapter.View
             holder.desertName.setText(mData.get(position).getName());
             holder.desertServings.setText(mData.get(position).getServings());
         }
-
-
-
-
     }
 
     // total number of cells

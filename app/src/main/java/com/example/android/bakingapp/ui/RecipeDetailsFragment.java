@@ -108,10 +108,7 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
        return builder.toString();
        }
 
-//    private void setTitleActionBar() {
-//        ((MainActivity) getActivity())
-//                .setActionBarTitle(mRecipeSent.getName());
-//    }
+
 
 
     @Override
@@ -127,6 +124,7 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
         if (savedInstanceState != null) {
             // Restore last state for checked position.
            // mRecipeList = savedInstanceState.getParcelable(LIST_STATE_KEY);
+            rvState = savedInstanceState.getParcelable(LIST_STATE_KEY);
             mRecipeList.getLayoutManager().onRestoreInstanceState(rvState);
         }
     }
