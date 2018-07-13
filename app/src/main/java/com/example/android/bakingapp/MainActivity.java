@@ -17,9 +17,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements RecipeMainFragment.OnRecipeClickListener, RecipeDetailsFragment.OnStepClickListener, FragmentManager.OnBackStackChangedListener {
 
+    private String APP_TITLE = "Baking App";
     private ArrayList<Recipe> mRecipeData;
     private boolean mTwoPane;
     private String actionBarTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
             layout.setLayoutParams(layoutParams);
 
-            setActionBarTitle("Baking App");
+            setActionBarTitle(APP_TITLE);
     }
 
     @Override
