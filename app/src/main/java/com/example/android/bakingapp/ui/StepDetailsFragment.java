@@ -45,6 +45,8 @@ public class StepDetailsFragment extends Fragment {
     private Long playbackPosition = 0L;
     private String videoUrl;
     private String thumbnailUrl;
+    private String CURRENT_POSITION = "current_position";
+    private long playerPosition;
 
 
     public StepDetailsFragment(){
@@ -79,6 +81,11 @@ public class StepDetailsFragment extends Fragment {
         videoUrl = mStepsSent.get(mNum).getVideoURL();
         thumbnailUrl = mStepsSent.get(mNum).getThumbNailURL();
 
+        if(savedInstanceState != null){
+            playbackPosition = savedInstanceState.getLong(CURRENT_POSITION);
+            playWhenReady = true;
+        }
+
 
 
         View view = inflater.inflate(R.layout.fragment_step_details, container, false);
@@ -108,8 +115,10 @@ public class StepDetailsFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-//            outState.putLong(POSITION_KEY, mCurrentPosition);
-//            outState.putBoolean(PLAY_WHEN_READY_KEY, mPlayWhenReady);
+            if (player != null) {
+                outState.putLong(CURRENT_POSITION, player.getCurrentPosition());
+            }
+            //outState.putBoolean(PLAY_WHEN_READY_KEY, mPlayWhenReady);
     }
 
     private void setDescription(View view){
@@ -146,13 +155,13 @@ public class StepDetailsFragment extends Fragment {
 
         playerView.setPlayer(player);
 
-        player.setPlayWhenReady(playWhenReady);
-        player.seekTo(currentWindow, playbackPosition);
-
         //Media Source
         Uri uri = Uri.parse(videoUrl);
         MediaSource mediaSource = buildMediaSource(uri);
         player.prepare(mediaSource, true, false);
+
+        player.setPlayWhenReady(playWhenReady);
+        player.seekTo(currentWindow, playbackPosition);
 
     }
 
