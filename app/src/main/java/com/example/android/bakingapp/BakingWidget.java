@@ -11,7 +11,7 @@ import android.widget.RemoteViews;
  */
 public class BakingWidget extends AppWidgetProvider {
 
-    private String APP_TITLE = "Baking App";
+    private String APP_TITLE = "BakingApp";
     private String WIDGET_INGREDIENTS = "ingredients";
     private String WIDGET_RECIPE_NAME = "recipeName";
 

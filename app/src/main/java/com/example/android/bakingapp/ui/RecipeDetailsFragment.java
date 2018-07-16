@@ -138,4 +138,5 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
             mRecipeList.getLayoutManager().onRestoreInstanceState(rvState);
         }
     }
+
 }

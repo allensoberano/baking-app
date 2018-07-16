@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:gravity="center"
-                    android:text="INGREDIENTS"
+                    android:text="@string/ingredients_label"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse" />
 
                 <TextView
@@ -41,7 +41,6 @@
                     android:layout_marginTop="32dp"
                     android:lineSpacingExtra="8dp"
                     android:padding="16dp"
-                    android:text="testing"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse" />
 
             </android.support.v7.widget.CardView>
