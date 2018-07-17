@@ -38,7 +38,7 @@ public class StepDetailsFragment extends Fragment {
     private SimpleExoPlayer player;
     private boolean playWhenReady = false;
     private int currentWindow = 0;
-    private Long playbackPosition = 0L;
+    private Long playbackPosition;
     private String videoUrl;
     private String thumbnailUrl;
     private final String CURRENT_POSITION = "current_position";
@@ -62,17 +62,32 @@ public class StepDetailsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mNum = getArguments().getInt("position", 0);
+        if (getArguments() != null) {
+            mNum = getArguments().getInt("position", 0);
+        }
+
+        if(savedInstanceState != null){
+            playbackPosition = savedInstanceState.getLong(CURRENT_POSITION);
+            playWhenReady = true;
+        }
+
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        Bundle fragmentBundle = getArguments().getBundle("fragmentBundle");
-        mStepsSent = fragmentBundle.getParcelableArrayList("steps");
-        videoUrl = mStepsSent.get(mNum).getVideoURL();
-        thumbnailUrl = mStepsSent.get(mNum).getThumbNailURL();
+        if (getArguments() != null) {
+            Bundle fragmentBundle = getArguments().getBundle("fragmentBundle");
+            if (fragmentBundle!=null)
+                mStepsSent = fragmentBundle.getParcelableArrayList("steps");
+            if (mStepsSent !=null) {
+                videoUrl = mStepsSent.get(mNum).getVideoURL();
+                thumbnailUrl = mStepsSent.get(mNum).getThumbNailURL();
+            }
+        }
+
+
 
         if(savedInstanceState != null){
             playbackPosition = savedInstanceState.getLong(CURRENT_POSITION);
@@ -90,9 +105,8 @@ public class StepDetailsFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-            if (player != null) {
-                outState.putLong(CURRENT_POSITION, player.getCurrentPosition());
-            }
+            if (playbackPosition != null)
+                outState.putLong(CURRENT_POSITION, playbackPosition);
     }
 
     private void setDescription(View view){
@@ -135,7 +149,8 @@ public class StepDetailsFragment extends Fragment {
         player.prepare(mediaSource, true, false);
 
         player.setPlayWhenReady(playWhenReady);
-        player.seekTo(currentWindow, playbackPosition);
+        if (playbackPosition!=null)
+            player.seekTo(playbackPosition);
 
     }
 
@@ -150,6 +165,7 @@ public class StepDetailsFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+
         releasePlayer();
     }
 
@@ -161,7 +177,7 @@ public class StepDetailsFragment extends Fragment {
 
     private void releasePlayer() {
         if (player != null) {
-            playbackPosition = player.getCurrentPosition();
+            if (player.getCurrentPosition() > 0) {playbackPosition = player.getCurrentPosition();}
             currentWindow = player.getCurrentWindowIndex();
             playWhenReady = player.getPlayWhenReady();
             player.release();

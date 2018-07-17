@@ -98,7 +98,8 @@ public class RecipeMainFragment extends Fragment implements RecipesRVAdapter.Ite
 
     private int numberOfColumns() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        if(getActivity() != null)
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         // You can change this divider to adjust the size of the poster
         int widthDivider = 400;
         int width = displayMetrics.widthPixels;

@@ -136,8 +136,7 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
     private void shouldDisplayHomeUp(){
         //Enable Up button only  if there are entries in the back stack
         boolean canback = getSupportFragmentManager().getBackStackEntryCount()>0;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
-
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
         if (!canback) adjustMainActivityLayout();
     }
 

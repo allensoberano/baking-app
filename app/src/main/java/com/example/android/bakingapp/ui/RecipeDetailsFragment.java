@@ -62,8 +62,8 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
-        mRecipeSent = getArguments().getParcelable("recipe");
+        if (getArguments() != null)
+            mRecipeSent = getArguments().getParcelable("recipe");
 
         //Inflate the RecipeMainFragment layout
         View rootView = inflater.inflate(R.layout.fragment_recipe_details, container, false);
@@ -105,12 +105,15 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
     private void saveIngredientsToSharedPref(String ingredients){
         //Reference: https://www.journaldev.com/9412/android-shared-preferences-example-tutorial
         //save to shared preferences for widget
-        SharedPreferences pref = getContext().getSharedPreferences("BakingApp", 0);
-        SharedPreferences.Editor editor = pref.edit();
 
-        editor.putString("ingredients", ingredients);
-        editor.putString("recipeName", mRecipeSent.getName());
-        editor.apply();
+        if (getContext()!=null) {
+            SharedPreferences pref = getContext().getSharedPreferences("BakingApp", 0);
+            SharedPreferences.Editor editor = pref.edit();
+
+            editor.putString("ingredients", ingredients);
+            editor.putString("recipeName", mRecipeSent.getName());
+            editor.apply();
+        }
     }
 
 

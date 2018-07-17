@@ -67,7 +67,6 @@ public class RecipeDetailRVAdapter extends RecyclerView.Adapter<RecipeDetailRVAd
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         final TextView stepDescription;
-        TextView desertServings;
 
         ViewHolder(View itemView) {
             super(itemView);

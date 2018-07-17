@@ -1,5 +1,6 @@
 package com.example.android.bakingapp.adapters;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +27,9 @@ public class RecipesRVAdapter extends RecyclerView.Adapter<RecipesRVAdapter.View
     }
 
     // inflates the cell layout from xml when needed
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recipe_list_item, parent, false);
         return new ViewHolder(view);
@@ -35,7 +37,7 @@ public class RecipesRVAdapter extends RecyclerView.Adapter<RecipesRVAdapter.View
 
     // binds the data to the text view in each cell
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         ArrayList<String> imageURLS = new ArrayList<>();
         imageURLS.add("https://c1.staticflickr.com/1/69/194933662_006fe7fae8.jpg");
