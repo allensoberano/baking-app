@@ -18,17 +18,20 @@ public class StepDetailsTabsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_step_details_tabs, container, false);
         Bundle bundle = getArguments();
-        int mStepsSent = getArguments().getParcelableArrayList("steps").size();
-        int mStepSelected = getArguments().getInt("stepSelected");
+        if (bundle != null) {
+            int mStepsSent = bundle.getParcelableArrayList("steps").size();
+            int mStepSelected = bundle.getInt("stepSelected");
 
-        // region ViewPager
-        ViewPager viewPager = rootView.findViewById(R.id.vp_steps);
-        viewPager.setAdapter(new DynamicTabsPagerAdapter(getChildFragmentManager(), mStepsSent, bundle));
+            // region ViewPager
+            ViewPager viewPager = rootView.findViewById(R.id.vp_steps);
+            viewPager.setAdapter(new DynamicTabsPagerAdapter(getChildFragmentManager(), mStepsSent, bundle));
 
-        TabLayout tabLayout = rootView.findViewById(R.id.tl_sliding_tabs);
-        tabLayout.setupWithViewPager(viewPager);
+            TabLayout tabLayout = rootView.findViewById(R.id.tl_sliding_tabs);
+            tabLayout.setupWithViewPager(viewPager);
 
-        viewPager.setCurrentItem(mStepSelected);
+            viewPager.setCurrentItem(mStepSelected);
+        }
+
         return rootView;
         //endregion
     }

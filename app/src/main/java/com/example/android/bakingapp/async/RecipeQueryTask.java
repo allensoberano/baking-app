@@ -2,7 +2,6 @@ package com.example.android.bakingapp.async;
 
 import android.os.AsyncTask;
 
-import com.example.android.bakingapp.MainActivity;
 import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.ui.RecipeMainFragment;
 import com.example.android.bakingapp.utils.JsonUtils;
@@ -18,10 +17,6 @@ public class RecipeQueryTask extends AsyncTask<URL, Void, List<Recipe>> {
     private final AsyncTaskCompleteListener <ArrayList<Recipe>> listener;
 
     public RecipeQueryTask(RecipeMainFragment.RecipeQueryTaskCompleteListener listener) {
-        this.listener = listener;
-    }
-
-    public RecipeQueryTask(MainActivity.RecipesQueryTaskCompleteListener listener) {
         this.listener = listener;
     }
 

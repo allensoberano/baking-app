@@ -1,13 +1,11 @@
 <resources>
     <string name="app_name">Baking App</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string name="media_url_mp4">http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4</string>
     <string name="appwidget_text">Select Recipe</string>
-    <string name="add_widget">Add widget</string>
     <string name="ingredients_label">INGREDIENTS</string>
+    <string name="dessert_image">Dessert Image</string>
+    <string name="recipe">Recipe:</string>
+    <string name="servings">Servings</string>
+    <string name="description">Description</string>
 
 
 </resources>

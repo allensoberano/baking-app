@@ -3,6 +3,7 @@ package com.example.android.bakingapp.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+@SuppressWarnings("unused")
 public class Step implements Parcelable {
 
     private int id;
@@ -12,7 +13,7 @@ public class Step implements Parcelable {
     private String thumbNailURL;
 
 
-    public Step(Parcel in) {
+    private Step(Parcel in) {
         id = in.readInt();
         shortDescription = in.readString();
         description = in.readString();

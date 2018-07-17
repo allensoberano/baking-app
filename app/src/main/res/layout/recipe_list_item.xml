@@ -23,14 +23,14 @@
         android:scaleType="fitXY"
         android:layout_gravity="center_horizontal"
         android:padding="10dp"
-        android:contentDescription="Desert"
+        android:contentDescription="@string/dessert_image"
 
         />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Recipe:"/>
+        android:text="@string/recipe"/>
 
     <TextView
         android:id="@+id/tv_recipe_title"
@@ -41,7 +41,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Servings"/>
+        android:text="@string/servings"/>
     <TextView
         android:id="@+id/tv_recipe_servings"
         android:layout_width="match_parent"

@@ -8,16 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.model.Ingredient;
 import com.example.android.bakingapp.model.Recipe;
-
-import java.util.List;
 
 public class RecipeDetailRVAdapter extends RecyclerView.Adapter<RecipeDetailRVAdapter.ViewHolder> {
 
-    private Recipe mRecipe;
-    private ItemClickListener mClickListener;
-    private List<Ingredient> mIngredients;
+    private final Recipe mRecipe;
+    private final ItemClickListener mClickListener;
 
     // data is passed into the constructor
     public RecipeDetailRVAdapter(Recipe data, ItemClickListener listener) {
@@ -70,7 +66,7 @@ public class RecipeDetailRVAdapter extends RecyclerView.Adapter<RecipeDetailRVAd
     // stores and recycles views as they are scrolled off screen
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView stepDescription;
+        final TextView stepDescription;
         TextView desertServings;
 
         ViewHolder(View itemView) {
@@ -78,9 +74,6 @@ public class RecipeDetailRVAdapter extends RecyclerView.Adapter<RecipeDetailRVAd
 
 
             stepDescription = itemView.findViewById(R.id.tv_step_title);
-            //dessertName = itemView.findViewById(R.id.tv_recipe_title);
-            //desertServings = itemView.findViewById(R.id.tv_recipe_servings);
-
             itemView.setOnClickListener(this);
         }
 
@@ -92,16 +85,7 @@ public class RecipeDetailRVAdapter extends RecyclerView.Adapter<RecipeDetailRVAd
         }
     }
 
-    private String buildString(List<Ingredient> ingredients){
 
-        //Builds a string of integredients with line breaks
-        StringBuilder builder = new StringBuilder();
-        for (Ingredient ingredient : ingredients) {
-            builder.append(ingredient.getQuantity() + " "+ ingredient.getMeasure() + " " + ingredient.getIngredient() + "\n");
-        }
-
-        return builder.toString();
-    }
 
 
 

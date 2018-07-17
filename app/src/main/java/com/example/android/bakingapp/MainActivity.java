@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.example.android.bakingapp.async.AsyncTaskCompleteListener;
 import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.model.Step;
 import com.example.android.bakingapp.ui.RecipeDetailsFragment;
@@ -17,10 +16,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements RecipeMainFragment.OnRecipeClickListener, RecipeDetailsFragment.OnStepClickListener, FragmentManager.OnBackStackChangedListener {
 
-    private String APP_TITLE = "Baking App";
-    private ArrayList<Recipe> mRecipeData;
     private boolean mTwoPane;
-    private String actionBarTitle;
 
 
     @Override
@@ -54,18 +50,6 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        //Save the fragment's instance
-       // getSupportFragmentManager().putFragment(outState, "recipeDetailsFragment", ???);
-    }
 
     @Override
     public void onRecipeSelected(Recipe recipe) {
@@ -99,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
 
         }
 
-        actionBarTitle = recipe.getName();
+        String actionBarTitle = recipe.getName();
         setActionBarTitle(actionBarTitle);
 
     }
@@ -140,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
 
     }
 
-    //Backstack Fragment Navigation:
+    //Back stack Fragment Navigation:
     //Reference: https://stackoverflow.com/questions/13086840/actionbar-up-navigation-with-fragments
 
     @Override
@@ -148,7 +132,8 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
         shouldDisplayHomeUp();
     }
 
-    public void shouldDisplayHomeUp(){
+    @SuppressWarnings("SpellCheckingInspection")
+    private void shouldDisplayHomeUp(){
         //Enable Up button only  if there are entries in the back stack
         boolean canback = getSupportFragmentManager().getBackStackEntryCount()>0;
         getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
@@ -163,7 +148,8 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
             layout.setLayoutParams(layoutParams);
 
-            setActionBarTitle(APP_TITLE);
+        String APP_TITLE = "Baking App";
+        setActionBarTitle(APP_TITLE);
     }
 
     @Override
@@ -178,18 +164,21 @@ public class MainActivity extends AppCompatActivity implements RecipeMainFragmen
         return true;
     }
 
-    public void setActionBarTitle(String title) {
+    @SuppressWarnings("ConstantConditions")
+    private void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
     }
 
 
 
-    public class RecipesQueryTaskCompleteListener implements AsyncTaskCompleteListener<ArrayList<Recipe>> {
+    //public class RecipesQueryTaskCompleteListener implements AsyncTaskCompleteListener<ArrayList<Recipe>> {
 
-        @Override
-        public void onTaskComplete(ArrayList<Recipe> result) {
-            mRecipeData = result;
-        }
-    }
+// --Commented out by Inspection START (7/16/18, 4:58 PM):
+//        @Override
+//        public void onTaskComplete(ArrayList<Recipe> result) {
+//
+//        }
+// --Commented out by Inspection STOP (7/16/18, 4:58 PM)
+    //}
 
 }

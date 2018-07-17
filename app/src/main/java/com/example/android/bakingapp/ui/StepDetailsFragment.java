@@ -1,12 +1,10 @@
 package com.example.android.bakingapp.ui;
 
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,17 +22,15 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 
+@SuppressWarnings("SpellCheckingInspection")
 public class StepDetailsFragment extends Fragment {
 
     private ArrayList<Step> mStepsSent;
-    private int mStepSelected;
-    private ViewPager mPager;
     private int mNum;
 
     //Exoplayer
@@ -45,8 +41,7 @@ public class StepDetailsFragment extends Fragment {
     private Long playbackPosition = 0L;
     private String videoUrl;
     private String thumbnailUrl;
-    private String CURRENT_POSITION = "current_position";
-    private long playerPosition;
+    private final String CURRENT_POSITION = "current_position";
 
 
     public StepDetailsFragment(){
@@ -67,7 +62,6 @@ public class StepDetailsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //mNum = getArguments() != null ? getArguments().getInt("position") : 1;
         mNum = getArguments().getInt("position", 0);
     }
 
@@ -77,7 +71,6 @@ public class StepDetailsFragment extends Fragment {
 
         Bundle fragmentBundle = getArguments().getBundle("fragmentBundle");
         mStepsSent = fragmentBundle.getParcelableArrayList("steps");
-        mStepSelected = fragmentBundle.getInt("stepSelected");
         videoUrl = mStepsSent.get(mNum).getVideoURL();
         thumbnailUrl = mStepsSent.get(mNum).getThumbNailURL();
 
@@ -86,29 +79,11 @@ public class StepDetailsFragment extends Fragment {
             playWhenReady = true;
         }
 
-
-
         View view = inflater.inflate(R.layout.fragment_step_details, container, false);
         setDescription(view);
         videoOrThumbnail(view);
 
-
-        //description, id, shortDescription, thumbNailURL, videoURL
-
-
-
         return view;
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        //check the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            //RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams playerView.getLayoutParams();
-
-        }
     }
 
     @Override
@@ -118,7 +93,6 @@ public class StepDetailsFragment extends Fragment {
             if (player != null) {
                 outState.putLong(CURRENT_POSITION, player.getCurrentPosition());
             }
-            //outState.putBoolean(PLAY_WHEN_READY_KEY, mPlayWhenReady);
     }
 
     private void setDescription(View view){
@@ -133,7 +107,7 @@ public class StepDetailsFragment extends Fragment {
             playerView.setVisibility(View.VISIBLE);
             initializePlayer();
         } else if (!thumbnailUrl.isEmpty()){
-            ImageView thumbImage = (ImageView) view.findViewById(R.id.thumbnail_image);
+            ImageView thumbImage = view.findViewById(R.id.thumbnail_image);
             thumbImage.setVisibility(View.VISIBLE);
 
             Picasso.get()
@@ -170,49 +144,19 @@ public class StepDetailsFragment extends Fragment {
                 new DefaultHttpDataSourceFactory("exoplayer-codelab")).createMediaSource(uri);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (Util.SDK_INT > 23){
-
-        }
-    }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        //hideSystemUi();
-        if ((Util.SDK_INT <= 23 || player == null)){
-
-        }
-    }
-
-//    //Implementation detail to have a pure full screen experience
-//    @SuppressLint("InlinedApi")
-//    private void hideSystemUi() {
-//        playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-//                | View.SYSTEM_UI_FLAG_FULLSCREEN
-//                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-//                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-//    }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (Util.SDK_INT <= 23) {
-            releasePlayer();
-        }
+        releasePlayer();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (Util.SDK_INT > 23) {
             releasePlayer();
-        }
     }
 
     private void releasePlayer() {

@@ -11,19 +11,15 @@ import android.widget.RemoteViews;
  */
 public class BakingWidget extends AppWidgetProvider {
 
-    private String APP_TITLE = "BakingApp";
-    private String WIDGET_INGREDIENTS = "ingredients";
-    private String WIDGET_RECIPE_NAME = "recipeName";
+    private final String APP_TITLE = "BakingApp";
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId, String ingredients, String recipeName) {
+    private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                        int appWidgetId, String ingredients, String recipeName) {
 
-        CharSequence widgetText = ingredients;
-        CharSequence name = recipeName;
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_widget);
-        views.setTextViewText(R.id.recipe_name, name);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
+        views.setTextViewText(R.id.recipe_name, recipeName);
+        views.setTextViewText(R.id.appwidget_text, ingredients);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -31,14 +27,14 @@ public class BakingWidget extends AppWidgetProvider {
 
     private String getIngredients(Context context){
         SharedPreferences pref = context.getSharedPreferences(APP_TITLE, 0);
-        String ingredientList = pref.getString(WIDGET_INGREDIENTS, null);
-        return ingredientList;
+        String WIDGET_INGREDIENTS = "ingredients";
+        return pref.getString(WIDGET_INGREDIENTS, null);
     }
 
     private String getRecipeName(Context context){
         SharedPreferences pref = context.getSharedPreferences(APP_TITLE, 0);
-        String recipeName = pref.getString(WIDGET_RECIPE_NAME, null);
-        return recipeName;
+        String WIDGET_RECIPE_NAME = "recipeName";
+        return pref.getString(WIDGET_RECIPE_NAME, null);
     }
 
 

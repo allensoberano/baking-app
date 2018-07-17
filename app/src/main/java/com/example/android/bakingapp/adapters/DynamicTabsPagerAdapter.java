@@ -14,8 +14,8 @@ import com.example.android.bakingapp.ui.StepDetailsFragment;
 
 public class DynamicTabsPagerAdapter extends FragmentStatePagerAdapter{
 
-    private int mSize;
-    private Bundle fragmentBundle;
+    private final int mSize;
+    private final Bundle fragmentBundle;
 
     public DynamicTabsPagerAdapter(FragmentManager fm, int size, Bundle bundle) {
         super(fm);

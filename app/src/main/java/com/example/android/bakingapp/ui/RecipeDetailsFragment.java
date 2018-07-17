@@ -27,7 +27,7 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
 
     private Recipe mRecipeSent;
     private RecyclerView mRecipeList;
-    OnStepClickListener mCallback;
+    private OnStepClickListener mCallback;
 
     //Instant States
     private Parcelable rvState;
@@ -75,7 +75,6 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
         RecipeDetailRVAdapter recipeDetailRVAdapter = new RecipeDetailRVAdapter(mRecipeSent, this);
         mRecipeList.setAdapter(recipeDetailRVAdapter);
         recipeDetailRVAdapter.notifyDataSetChanged();
-        //showRecipe(mRecipeSent);
 
 
         TextView ingredients = rootView.findViewById(R.id.tv_ingredient_list);
@@ -84,12 +83,6 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
         return rootView;
     }
 
-    private void showRecipe(Recipe recipe) {
-        RecipeDetailRVAdapter recipeRVAdapter = new RecipeDetailRVAdapter(recipe, this);
-        mRecipeList.setAdapter(recipeRVAdapter);
-        recipeRVAdapter.notifyDataSetChanged();
-
-    }
 
     @Override
     public void onItemClick(int position) {
@@ -102,7 +95,7 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
 
         StringBuilder builder = new StringBuilder();
         for (Ingredient ingredient : ingredients) {
-            builder.append(ingredient.getQuantity() + " " + ingredient.getMeasure() + " " + ingredient.getIngredient() + "\n");
+            builder.append(ingredient.getQuantity()).append(" ").append(ingredient.getMeasure()).append(" ").append(ingredient.getIngredient()).append("\n");
         }
 
         saveIngredientsToSharedPref(builder.toString());
@@ -117,7 +110,7 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
 
         editor.putString("ingredients", ingredients);
         editor.putString("recipeName", mRecipeSent.getName());
-        editor.commit();
+        editor.apply();
     }
 
 

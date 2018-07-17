@@ -1,6 +1,5 @@
 package com.example.android.bakingapp.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +16,8 @@ import java.util.List;
 
 public class RecipesRVAdapter extends RecyclerView.Adapter<RecipesRVAdapter.ViewHolder> {
 
-    private List<Recipe> mData;
-    private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
-    private Context context;
+    private final List<Recipe> mData;
+    private final ItemClickListener mClickListener;
 
     // data is passed into the constructor
     public RecipesRVAdapter(List<Recipe> data, ItemClickListener listener) {
@@ -36,11 +33,11 @@ public class RecipesRVAdapter extends RecyclerView.Adapter<RecipesRVAdapter.View
         return new ViewHolder(view);
     }
 
-    // binds the data to the textview in each cell
+    // binds the data to the text view in each cell
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        ArrayList<String> imageURLS = new ArrayList<String>();
+        ArrayList<String> imageURLS = new ArrayList<>();
         imageURLS.add("https://c1.staticflickr.com/1/69/194933662_006fe7fae8.jpg");
 
         if (mData != null) {
@@ -73,9 +70,9 @@ public class RecipesRVAdapter extends RecyclerView.Adapter<RecipesRVAdapter.View
 
     // stores and recycles views as they are scrolled off screen
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView desertImage;
-        TextView desertName;
-        TextView desertServings;
+        final ImageView desertImage;
+        final TextView desertName;
+        final TextView desertServings;
 
         ViewHolder(View itemView) {
             super(itemView);

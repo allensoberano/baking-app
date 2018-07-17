@@ -26,11 +26,8 @@ import java.util.List;
 public class RecipeMainFragment extends Fragment implements RecipesRVAdapter.ItemClickListener {
 
     private RecyclerView mRecipeList;
-    private RecipesRVAdapter adapter;
-    private List<String> tempData;
     private ArrayList<Recipe> mRecipeData;
-    private Recipe recipe;
-    OnRecipeClickListener mCallback;
+    private OnRecipeClickListener mCallback;
 
     //Mandatory constructor for instantiating the fragment
     public RecipeMainFragment(){
@@ -47,7 +44,7 @@ public class RecipeMainFragment extends Fragment implements RecipesRVAdapter.Ite
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        //Makes sure that the host activity has implemented the callback interfae
+        //Makes sure that the host activity has implemented the callback interface
         //If not, it throws an exception
 
         try {
