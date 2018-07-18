@@ -23,17 +23,22 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+@SuppressWarnings("WeakerAccess") //Because of butterknife they cant be private
 public class RecipeMainFragment extends Fragment implements RecipesRVAdapter.ItemClickListener {
 
-    private RecyclerView mRecipeList;
     private ArrayList<Recipe> mRecipeData;
     private OnRecipeClickListener mCallback;
+
+    @BindView(R.id.rv_recipes_main)
+    RecyclerView recipesMain;
 
     //Mandatory constructor for instantiating the fragment
     public RecipeMainFragment(){
 
     }
-
 
     public interface OnRecipeClickListener{
 
@@ -62,11 +67,9 @@ public class RecipeMainFragment extends Fragment implements RecipesRVAdapter.Ite
 
         //Inflate the RecipeMainFragment layout
         View rootView = inflater.inflate(R.layout.fragment_recipes_main, container, false);
+        ButterKnife.bind(this, rootView);
 
-        mRecipeList = rootView.findViewById(R.id.rv_recipes_main);
-        //mRecipeList.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecipeList.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns()));
-
+        recipesMain.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns()));
         URL recipeSearchUrl = NetworkUtils.buildRecipeURL();
         new RecipeQueryTask(new RecipeQueryTaskCompleteListener()).execute(recipeSearchUrl);
 
@@ -76,7 +79,7 @@ public class RecipeMainFragment extends Fragment implements RecipesRVAdapter.Ite
 
     private void showRecipes(List<Recipe> recipe) {
         RecipesRVAdapter recipeRVAdapter = new RecipesRVAdapter(recipe, this);
-        mRecipeList.setAdapter(recipeRVAdapter);
+        recipesMain.setAdapter(recipeRVAdapter);
         recipeRVAdapter.notifyDataSetChanged();
 
     }
@@ -107,4 +110,6 @@ public class RecipeMainFragment extends Fragment implements RecipesRVAdapter.Ite
         if (nColumns < 2) return 2;
         return nColumns;
     }
+
+
 }

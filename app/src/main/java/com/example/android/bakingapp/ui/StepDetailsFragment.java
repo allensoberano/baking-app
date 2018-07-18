@@ -26,22 +26,33 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-@SuppressWarnings("SpellCheckingInspection")
+
+@SuppressWarnings({"SpellCheckingInspection", "WeakerAccess"}) //Because of butterknife they cant be private
 public class StepDetailsFragment extends Fragment {
 
     private ArrayList<Step> mStepsSent;
     private int mNum;
 
     //Exoplayer
-    private PlayerView playerView;
+    //private PlayerView playerView;
     private SimpleExoPlayer player;
     private boolean playWhenReady = false;
-    private int currentWindow = 0;
     private Long playbackPosition;
     private String videoUrl;
     private String thumbnailUrl;
     private final String CURRENT_POSITION = "current_position";
+
+    @BindView(R.id.tv_description)
+    TextView description;
+
+    @BindView(R.id.video_view)
+    PlayerView playerView;
+
+    @BindView(R.id.thumbnail_image)
+    ImageView thumbImage;
 
 
     public StepDetailsFragment(){
@@ -95,8 +106,9 @@ public class StepDetailsFragment extends Fragment {
         }
 
         View view = inflater.inflate(R.layout.fragment_step_details, container, false);
-        setDescription(view);
-        videoOrThumbnail(view);
+        ButterKnife.bind(this, view);
+        setDescription();
+        videoOrThumbnail();
 
         return view;
     }
@@ -109,19 +121,16 @@ public class StepDetailsFragment extends Fragment {
                 outState.putLong(CURRENT_POSITION, playbackPosition);
     }
 
-    private void setDescription(View view){
+    private void setDescription(){
 
-        TextView mDescription = view.findViewById(R.id.tv_description);
-        mDescription.setText(mStepsSent.get(mNum).getDescription());
+        description.setText(mStepsSent.get(mNum).getDescription());
     }
 
-    private void videoOrThumbnail(View view){
+    private void videoOrThumbnail(){
         if (!videoUrl.isEmpty()){
-            playerView = view.findViewById(R.id.video_view);
             playerView.setVisibility(View.VISIBLE);
             initializePlayer();
         } else if (!thumbnailUrl.isEmpty()){
-            ImageView thumbImage = view.findViewById(R.id.thumbnail_image);
             thumbImage.setVisibility(View.VISIBLE);
 
             Picasso.get()
@@ -160,8 +169,6 @@ public class StepDetailsFragment extends Fragment {
     }
 
 
-
-
     @Override
     public void onPause() {
         super.onPause();
@@ -178,7 +185,6 @@ public class StepDetailsFragment extends Fragment {
     private void releasePlayer() {
         if (player != null) {
             if (player.getCurrentPosition() > 0) {playbackPosition = player.getCurrentPosition();}
-            currentWindow = player.getCurrentWindowIndex();
             playWhenReady = player.getPlayWhenReady();
             player.release();
             player = null;

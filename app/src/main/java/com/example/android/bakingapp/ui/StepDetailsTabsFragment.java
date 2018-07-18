@@ -16,14 +16,26 @@ import com.example.android.bakingapp.model.Step;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+@SuppressWarnings("WeakerAccess")
 public class StepDetailsTabsFragment extends Fragment {
 
     private int mStepsSent = 0;
+
+    @BindView(R.id.vp_steps)
+    ViewPager steps;
+
+    @BindView(R.id.tl_sliding_tabs)
+    TabLayout tabLayout;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_step_details_tabs, container, false);
+        ButterKnife.bind(this, rootView);
+
         Bundle bundle = getArguments();
         if (bundle != null) {
             List<Step> mSteps = bundle.getParcelableArrayList("steps");
@@ -31,13 +43,11 @@ public class StepDetailsTabsFragment extends Fragment {
             int mStepSelected = bundle.getInt("stepSelected");
 
             // region ViewPager
-            ViewPager viewPager = rootView.findViewById(R.id.vp_steps);
-            viewPager.setAdapter(new DynamicTabsPagerAdapter(getChildFragmentManager(), mStepsSent, bundle));
+            steps.setAdapter(new DynamicTabsPagerAdapter(getChildFragmentManager(), mStepsSent, bundle));
 
-            TabLayout tabLayout = rootView.findViewById(R.id.tl_sliding_tabs);
-            tabLayout.setupWithViewPager(viewPager);
+            tabLayout.setupWithViewPager(steps);
 
-            viewPager.setCurrentItem(mStepSelected);
+            steps.setCurrentItem(mStepSelected);
         }
 
         return rootView;

@@ -23,15 +23,24 @@ import com.example.android.bakingapp.model.Step;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+@SuppressWarnings("WeakerAccess") //Because of butterknife they cant be private
 public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAdapter.ItemClickListener {
 
     private Recipe mRecipeSent;
-    private RecyclerView mRecipeList;
     private OnStepClickListener mCallback;
 
     //Instant States
     private Parcelable rvState;
     private final static String LIST_STATE_KEY = "rv_state";
+
+    @BindView(R.id.rv_recipe_details)
+    RecyclerView mRecipeList;
+
+    @BindView(R.id.tv_ingredient_list)
+    TextView mIngredients;
 
     //Mandatory constructor for instantiating the fragment
     public RecipeDetailsFragment() {
@@ -67,18 +76,14 @@ public class RecipeDetailsFragment extends Fragment implements RecipeDetailRVAda
 
         //Inflate the RecipeMainFragment layout
         View rootView = inflater.inflate(R.layout.fragment_recipe_details, container, false);
+        ButterKnife.bind(this, rootView);
 
-        //setTitleActionBar();
-
-        mRecipeList = rootView.findViewById(R.id.rv_recipe_details);
         mRecipeList.setLayoutManager(new LinearLayoutManager(getContext()));
         RecipeDetailRVAdapter recipeDetailRVAdapter = new RecipeDetailRVAdapter(mRecipeSent, this);
         mRecipeList.setAdapter(recipeDetailRVAdapter);
         recipeDetailRVAdapter.notifyDataSetChanged();
 
-
-        TextView ingredients = rootView.findViewById(R.id.tv_ingredient_list);
-        ingredients.setText(buildString(mRecipeSent.getIngredients()));
+        mIngredients.setText(buildString(mRecipeSent.getIngredients()));
 
         return rootView;
     }

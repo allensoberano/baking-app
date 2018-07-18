@@ -39,12 +39,16 @@ public class RecipesRVAdapter extends RecyclerView.Adapter<RecipesRVAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        //Flickr photos: no known copyright restrictions
         ArrayList<String> imageURLS = new ArrayList<>();
         imageURLS.add("https://c1.staticflickr.com/1/69/194933662_006fe7fae8.jpg");
+        imageURLS.add("https://c2.staticflickr.com/2/1563/23698710074_ff60749503_n.jpg");
+        imageURLS.add("https://c2.staticflickr.com/4/3695/20235064896_91aa197aaa_n.jpg");
+        imageURLS.add("https://c1.staticflickr.com/5/4187/34355077731_937ab8d968_n.jpg");
 
         if (mData != null) {
             Picasso.get()
-                    .load(imageURLS.get(0))
+                    .load(imageURLS.get(position))
                     .fit()
                     .placeholder(R.drawable.ic_cake_black_24dp)
                     .error(R.drawable.ic_cake_black_24dp)
